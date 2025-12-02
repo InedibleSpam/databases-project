@@ -4,7 +4,7 @@ let dbconn =  mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "poo.py",
-    database: "mydb"
+    database: "EastWest"
 
 });
 
@@ -16,7 +16,7 @@ dbconn.connect(function(err) {
 
 // Function for user sign-in
 function userSignIn(name, email, password) {
-    const sign_in_prompt = "insert into passenger(pass_name, pass_email, pass_password) values(?, ?, ?)";
+    const sign_in_prompt = "insert into passenger(pass_name, pass_email, password) values(?, ?, ?)";
     let email_search = "select * from passenger where pass_email = ?";
 
 //Checks to see if email already exists
@@ -42,7 +42,7 @@ function userSignIn(name, email, password) {
  
 // Function for user login
 function userLogin(email, password) {
-    const login_prompt = "select * from passenger where pass_email = ? and pass_password = ?";
+    const login_prompt = "select * from passenger where pass_email = ? and password = ?";
 
     //Checks to see if the account exists
     dbconn.query(login_prompt, [email, password], function(err, results) {
