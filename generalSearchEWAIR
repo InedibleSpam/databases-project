@@ -1,0 +1,65 @@
+let EastWestDB = require('mysql');
+
+let dbconn =  EastWestDB.createConnection({
+    host: "localhticketost",
+    user: "root",
+    password: "poo.py",
+    database: "EastWest"
+
+});
+
+dbconn.connect(function(error) {
+    if (error) throw error;
+    console.log("Connected");
+});
+
+
+
+
+function GeneralSortFunction(depature_time, arrival_time, date, price_greater_than = null, price_less_than = null, seat_class = null){
+    if (price_greater_than != null){
+        value_list.push(price_greater_than);
+        column_list.push("price > ? ");
+    }
+    if(price_less_than != null){
+        value_list.push(price_less_than);
+        column_list.push("price < ? ");
+    }
+    if(seat_class != null){
+        value_list.push(seat_class);
+        column_list.push("seat_class = ? ");
+    }
+
+    const value_list = [ ];
+    const column_list = [ ];
+    let sql = "SELECT price, class, logs.date ,logs.departure_time, logs.arrival_time FROM ticket inner join logs ON ticket.log_id = logs.log_id WHERE date = ? and departure_time = ? and arrival_time = ?";
+
+    if (value_list.length >0 && column_list.length >0 && value_list.length == column_list.length){
+        for (let column = 0; column < column_list.length; column++){
+            sql += column_list[column];
+            if (column < value_list.length-1){
+                sql += " and ";
+            }
+        }
+
+        dbconn.query(sql, value_list, function(error, results) {
+            if (error) throw error;
+            
+            if (results.length > 0) {
+                ticket_info = results[0];
+
+                for (let column in ticket_info){
+                    console.log(column + ": " + ticket_info[column]);
+                }
+            }
+            else {
+                console.log ("No tickets found.");
+            }
+        });
+        
+
+    }
+    
+}
+
+//GeneralSortFunction();
