@@ -127,7 +127,7 @@ async function add_mem(use_email, user_password, pay_type) {
     console.log(worked);
 
     let vals2 = [use_id_num, 80, dates, pay_type];
-    let payed = await query_DB("insert into payment(use_id, price, date, pay_type) values(?, ?, ?, ?", vals2);
+    let payed = await query_DB("insert into payment(use_id, price, date, pay_type) values(?, ?, ?, ?)", vals2);
     console.log(payed);
     
     let member_obj = await query_DB("select mem_id from member where use_id = ?", [use_id_num]);
@@ -182,7 +182,7 @@ async function check_bag(use_email, user_password, bag_weight) {
 
   if(use_password_str == user_password) {
     let vals = [bag_weight, use_id_num];
-    let worked = await query_DB("insert into luggage(weight, use_id) values(?, ?", vals);
+    let worked = await query_DB("insert into luggage(weight, use_id) values(?, ?)", vals);
     console.log(worked);
     
   } else {

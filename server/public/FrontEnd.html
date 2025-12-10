@@ -1,73 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Airline Customer Portal</title>
+  <meta charset="UTF-8">
+  <title>EastWest Airline Booking</title>
+ 
 </head>
 <body>
+  <h1>EastWest Airline Booking</h1>
 
-    <h1>Airline Customer Portal</h1>
+   <p><a href = "SignUp.html">Login/Signup</a></p>
+   <button id="logoutBtn" style="margin-bottom: 10px;">Logout</button>
 
-    <h2>Search for Flights</h2>
-    <form>
-        <label>From:</label>
-        <input type="text" name="from" required>
+  <div class="form-group">
+    <label for="depart">Departure Airport:</label>
+    <select id="depart">
+      <option value="">Select departure</option>
+    </select>
+  </div>
 
-        <br><br>
 
-        <label>To:</label>
-        <input type="text" name="to" required>
+  <div class="form-group">
+    <label for="arrive">Arrival Airport:</label>
+    <select id="arrive">
+      <option value="">Select arrival</option>
+    </select>
+  </div>
 
-        <br><br>
+  <div class="form-group">
+    <label for="date">Departure Date:</label>
+    <input type="date" id="date">
+  </div>
 
-        <label>Date:</label>
-        <input type="date" name="date">
+  <div class="form-group">
+    <label for="class">Class:</label>
+    <select id="class">
+      <option value="economy">Economy</option>
+      <option value="business">Business</option>
+      <option value="first">First</option>
+    </select>
+  </div>
 
-        <br><br>
+  <div class="form-group">
+    <label for="numTickets">Number of Tickets:</label>
+    <input type="number" id="numTickets" value="1" min="1">
+  </div>
 
-        <button type="submit">Search Flights</button>
-    </form>
+  <button id="searchBtn">Search Flight</button>
 
-    <hr>
+  <div id="result"></div>
 
-    <h2>View Airports</h2>
-    <form>
-        <button type="submit">Show Airports</button>
-    </form>
-
-    <hr>
-
-    <h2>View Airlines</h2>
-    <form>
-        <button type="submit">Show Airlines</button>
-    </form>
-
-    <hr>
-
-    <h2>Book a Flight</h2>
-    <form>
-
-        <label>Flight Number:</label>
-        <input type="text" name="flight_number" required>
-
-        <br><br>
-
-        <label>Your Name:</label>
-        <input type="text" name="customer_name" required>
-
-        <br><br>
-
-        <label>Your Email:</label>
-        <input type="email" name="customer_email" required>
-
-        <br><br>
-
-        <button type="submit">Book Flight</button>
-    </form>
-
-    <hr>
-
-    <p>End of page.</p>
-
+  <script src="frontend.js"></script>
 </body>
 </html>

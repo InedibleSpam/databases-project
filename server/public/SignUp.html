@@ -9,42 +9,29 @@
 <h1>Sign Up</h1>
 
 <form id="signupForm">
-    <label>Name:</label><br>
-    <input type="text" id="name"><br><br>
+    <label>First Name:</label><br>
+    <input type="text" id="fname" name="first_name"><br><br>
 
+    <label>Last Name:</label><br>
+    <input type="text" id="lname" name="last_name"><br><br>
+    
     <label>Email:</label><br>
-    <input type="email" id="email"><br><br>
+    <input type="email" id="email" name="email"><br><br>
 
     <label>Password:</label><br>
-    <input type="password" id="password"><br><br>
+    <input type="password" id="password" name="password"><br><br>
+
+    <label>Confirm Password:</label><br>
+    <input type="password" id="password2" name="password2"><br><br>
+
+    <p id="error-message" style="color:red;"></p>
 
     <button type="submit">Sign Up</button>
 </form>
 
-<p>Already have an account? <a href="Login.html">Login</a></p>
+<p>Already have an account? <a href="login.html">Login</a></p>
 
-<script>
-document.getElementById("signupForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
-    const res = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password })
-    });
-
-    const data = await res.json();
-    alert(data.message);
-
-    if (data.message === "User registered successfully") {
-        window.location.href = "Login.html";
-    }
-});
-</script>
+<script src="signup.js"></script>
 
 </body>
 </html>
