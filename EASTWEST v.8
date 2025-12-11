@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `EastWest`.`Payment` (
   `pay_id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `Tick_Price` FLOAT NOT NULL,
-  `Date` DATE GENERATED ALWAYS AS (DateTime()) VIRTUAL,
+  `Date` DATE NOT NULL,
   `Type` VARCHAR(25) NOT NULL,
   PRIMARY KEY (`pay_id`),
   INDEX `payment_user_id_idx` (`user_id` ASC) VISIBLE,
@@ -189,5 +189,5 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 use EastWest;
 INSERT INTO user
-VALUES (-1, "John" "Mod Admin", "Mrstealyopassword82@gmail.com", "incorrect", "1987-12-25");
+VALUES (-1, "John", "Mod Admin", "Mrstealyopassword82@gmail.com", "incorrect", "1987-12-25");
 commit;
