@@ -1,0 +1,88 @@
+let EastWestDB = require('mysql');
+
+let dbconn =  EastWestDB.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "poo.py",
+    database: "EastWest"
+
+});
+
+dbconn.connect(function(error) {
+    if (error) throw error;
+    console.log("Connected");
+});
+
+//All of these are meant to be used for the filter buttons and inserted into the generalSortFunction
+
+
+//Returns boolean
+function setPriceAsc(price_ascending){
+    return price_ascending;
+}
+//Returns string
+function setSeatClass(seat_class){
+    return seat_class;
+}   
+
+function queryDB(sql, values = []){
+    return new Promise((resolve, reject) => {
+        dbconn.query(sql, values, (error, results) => {
+        if (error){
+            return reject(error);
+        }else{
+            resolve(results);
+            return true;
+        }
+    });
+    });
+}
+
+
+async function GeneralSearchFunction(in_airport, out_airport, date, price_ascending = false, seat_class = null ,departure_time = null, arrival_time = null){
+
+    if(seat_class != null){
+        value_list.push(seat_class);
+        column_list.push("seat_class = ? ");
+
+    };
+    if(departure_time != null){
+        value_list.push(departure_time);
+        column_list.push("logs.departure_time = ? ");
+    }
+    if(arrival_time != null){
+        value_list.push(arrival_time);
+        column_list.push("logs.arrival_time = ? ");
+    }
+    
+
+
+
+    const normal_value_list = [in_airport, out_airport, date, departure_time, arrival_time];
+    const filter_value_list = [ ];
+    const filter_column_list = [ ];
+
+    sql = "SELECT price, class, logs.date, logs.departure_time, logs.arrival_time FROM ticket inner join logs ON ticket.log_id = logs.log_id WHERE in_airport = ? and out_airport = ? and logs.date = ?";
+    if (filter_value_list.length >0 && filter_column_list.length >0 && filter_value_list.length == filter_column_list.length){
+        sql += " and ";
+        for (let column = 0; column < column_list.length; column++){
+            sql += column_list[column];
+            if (column < value_list.length-1){
+                sql += " and ";
+            }
+
+        }
+
+    }
+
+    if (price_ascending == true){
+        sql += "ORDER BY price ASC";
+    }
+
+    let flights = await queryDB(sql, normal_value_list.concat(filter_value_list));
+    return flights;
+}
+
+
+
+//console.log(GeneralSortFunction(2, 1, '11:00:00', '14:30:00', '2025-12-15'));
