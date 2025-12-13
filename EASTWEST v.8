@@ -95,6 +95,8 @@ CREATE TABLE IF NOT EXISTS `EastWest`.`Passenger` (
   `user_id` INT NOT NULL,
   `carryon` Boolean NOT NULL DEFAULT False,
   `ticket_id` INT NOT NULL,
+  `fname` VARCHAR(16) NOT NULL,
+  `lname` VARCHAR(16) NOT NULL,
   PRIMARY KEY (`pass_id`),
   INDEX `pass_user_id_idx` (`user_id` ASC) VISIBLE,
   INDEX `pass_ticket_id_idx` (`ticket_id` ASC) VISIBLE,
