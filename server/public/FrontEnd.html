@@ -1,54 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>EastWest Airline Booking</title>
- 
-</head>
-<body>
-  <h1>EastWest Airline Booking</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>EastWest Airline Booking</title>
+    <link rel="stylesheet" href="frontend.css" />
+  </head>
+  <body>
+    <h1>EastWest Airline Booking</h1>
 
-   <p><a href = "SignUp.html">Login/Signup</a></p>
-   <button id="logoutBtn" style="margin-bottom: 10px;">Logout</button>
+    <div id="auth-container">
+      <p><a href="SignUp.html">Login/Signup</a></p>
 
-  <div class="form-group">
-    <label for="depart">Departure Airport:</label>
-    <select id="depart">
-      <option value="">Select departure</option>
-    </select>
-  </div>
+      <button id="logoutBtn">Logout</button>
+    </div>
 
+    <div id="searchContainer">
+      <div class="form-group">
+        <label for="depart">Departure Airport:</label>
+        <select id="depart">
+          <option value="">Select departure</option>
+        </select>
+      </div>
 
-  <div class="form-group">
-    <label for="arrive">Arrival Airport:</label>
-    <select id="arrive">
-      <option value="">Select arrival</option>
-    </select>
-  </div>
+      <div class="form-group">
+        <label for="arrive">Arrival Airport:</label>
+        <select id="arrive">
+          <option value="">Select arrival</option>
+        </select>
+      </div>
 
-  <div class="form-group">
-    <label for="date">Departure Date:</label>
-    <input type="date" id="date">
-  </div>
+      <div class="form-group">
+        <label for="date">Departure Date:</label>
+        <input type="date" id="date" />
+      </div>
 
-  <div class="form-group">
-    <label for="class">Class:</label>
-    <select id="class">
-      <option value="economy">Economy</option>
-      <option value="business">Business</option>
-      <option value="first">First</option>
-    </select>
-  </div>
+      <div class="form-group">
+        <label for="class">Class:</label>
+        <select id="class">
+          <option value="economy">Economy</option>
+          <option value="business">Business</option>
+          <option value="first">First</option>
+        </select>
+      </div>
 
-  <div class="form-group">
-    <label for="numTickets">Number of Tickets:</label>
-    <input type="number" id="numTickets" value="1" min="1">
-  </div>
+      <div class="form-group">
+        <label for="numTickets">Number of Tickets:</label>
+        <input type="number" id="numTickets" value="1" min="1" />
+      </div>
 
-  <button id="searchBtn">Search Flight</button>
+      <button id="searchBtn">Search Flight</button>
+    </div>
+    <div id="result"></div>
 
-  <div id="result"></div>
-
-  <script src="frontend.js"></script>
-</body>
+    <script src="frontend.js"></script>
+  </body>
 </html>

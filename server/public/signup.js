@@ -4,6 +4,7 @@ if (signupForm) {
     const lnameField = document.getElementById("lname");
     const emailField = document.getElementById("email");
     const passwordField = document.getElementById("password");
+    const birthdateField = document.getElementById("birthdate");
     const password2Field = document.getElementById("password2");
     const errorMessage = document.getElementById("error-message");
 
@@ -14,6 +15,7 @@ if (signupForm) {
         if (!fnameField.value.trim()) errors.push("First Name required");
         if (!lnameField.value.trim()) errors.push("Last Name required");
         if (!emailField.value.trim()) errors.push("Email required");
+        if (!birthdateField.value.trim()) errors.push("Date of Birth required");
         if (!passwordField.value.trim()) errors.push("Password required");
         if (passwordField.value.length < 8) errors.push("Password too short");
         if (passwordField.value !== password2Field.value) errors.push("Passwords mismatch");
@@ -28,10 +30,11 @@ if (signupForm) {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    first_name: fnameField.value,
-                    last_name: lnameField.value,
-                    email: emailField.value,
-                    password: passwordField.value
+                    fname: fnameField.value,
+                    lname: lnameField.value,
+                    user_email: emailField.value,
+                    user_password: passwordField.value,
+                    birthdate: birthdateField.value
                 })
             });
             const data = await res.json();
