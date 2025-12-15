@@ -1,68 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Confirm Your Purchase - EastWest</title>
+    <link rel="stylesheet" href="purchase.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Flight Purchase Confirmation</h1>
 
-</head>
-<body>
-    <h1>Flight Purchase Confirmation </h1>
-    
-    <div id="flightDetails">
+      <div id="flightDetails">
         <p>Loading flight details...</p>
-    </div>
+      </div>
 
-    <hr>
-    
-    <h2>Passenger & Payment Details</h2>
-    <form id="purchaseForm">
-        
-        <h3>Payer Account Details</h3>
-        <p>You must be logged in to complete the purchase.</p>
+      <hr />
 
-        <div class="form-group">
+      <h2>Passenger & Payment Details</h2>
+      <form id="purchaseForm">
+        <div class="form-section">
+          <h3>Payer Account Details</h3>
+          <p>You must be logged in to complete the purchase.</p>
+
+          <div class="form-group">
             <label for="userEmail">Email:</label>
-            <input type="email" id="userEmail" required>
-        </div>
-        
-        <div class="form-group">
+            <input type="email" id="userEmail" required />
+          </div>
+
+          <div class="form-group">
             <label for="userPassword">Password:</label>
-            <input type="password" id="userPassword" required>
+            <input type="password" id="userPassword" required />
+          </div>
+
+          <p style="text-align: center">
+            <a href="/signup">Don't have an account? Register here.</a>
+          </p>
         </div>
-        
-        <p><a href="/signup">Don't have an account? Register here.</a></p>
 
-        <h3>Passenger Information (<span id="numTicketsDisplay"></span> Tickets)</h3>
-        <div id="passengerInputsContainer">
-            </div>
+        <div class="form-section">
+          <h3>
+            Passenger Information (<span id="numTicketsDisplay"></span> Tickets)
+          </h3>
+          <div id="passengerInputsContainer"></div>
+        </div>
 
-        <h3>Ticket Options</h3>
-        <div class="form-group">
+        <div class="form-section">
+          <h3>Ticket Options & Payment</h3>
+
+          <div class="form-group">
             <label for="carryOn">Carry-on Bag? (Applies to ALL tickets)</label>
             <select id="carryOn">
-                <option value="1">Yes</option>
-                <option value="0" selected>No</option>
+              <option value="1">Yes</option>
+              <option value="0" selected>No</option>
             </select>
-        </div>
+          </div>
 
-        <div class="form-group">
+          <div class="form-group">
             <label for="paymentType">Payment Type:</label>
             <select id="paymentType" required>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Debit Card">Debit Card</option>
-                <option value="Other">Other</option>
+              <option value="Credit Card">Credit Card</option>
+              <option value="Debit Card">Debit Card</option>
+              <option value="Other">Other</option>
             </select>
+          </div>
         </div>
-        
-        <br>
-        <button type="submit" id="confirmPurchaseBtn">Confirm Purchase</button>
-    </form>
-    
-    <p id="purchaseMessage"></p>
-    
+
+        <button type="submit" id="confirmPurchaseBtn" class="submit-btn">
+          Confirm Purchase
+        </button>
+      </form>
+
+      <p id="purchaseMessage"></p>
+
+      <hr />
+      <p style="text-align: center"><a href="/">Back to Search</a></p>
+    </div>
+
     <script src="purchase.js"></script>
-    
-    <hr>
-    <p><a href="/">Back to Search</a></p>
-</body>
+  </body>
 </html>

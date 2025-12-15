@@ -1,5 +1,3 @@
-// public/tickets.js
-
 document.addEventListener('DOMContentLoaded', () => {
     const params = new URLSearchParams(window.location.search);
     const user_id = params.get('user_id');

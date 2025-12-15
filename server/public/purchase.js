@@ -12,22 +12,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const params = new URLSearchParams(window.location.search);
     const log_id = params.get('log_id');
-    const total_price = parseFloat(params.get('price'));
     const seat_class = params.get('class');
     const num_tickets = parseInt(params.get('tickets'));
     const depart_port = params.get('depart_port');
     const arrive_port = params.get('arrive_port');
     const date = params.get('date');
 
-    const unit_price = total_price / num_tickets; 
+    const unit_price = parseFloat(params.get('price')); 
+    const total_price = unit_price * num_tickets; // Correctly calculate total price
     
-    if (!log_id || isNaN(total_price) || isNaN(num_tickets) || !depart_port || !arrive_port || !date) {
+    if (!log_id || isNaN(unit_price) || isNaN(num_tickets) || !depart_port || !arrive_port || !date) {
         flightDetailsDiv.innerHTML = '<p style="color: red;">Error: Missing flight details. Please return to the search page.</p>';
         purchaseForm.style.display = 'none';
         return;
     }
     
-    // Render Flight Information
     flightDetailsDiv.innerHTML = `
         <p><strong>Flight Log ID:</strong> ${log_id}</p>
         <p><strong>Route:</strong> ${depart_port} to ${arrive_port}</p>
@@ -102,11 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
         messageElement.textContent = 'Processing purchase...';
         messageElement.style.color = 'blue';
 
-        // Construct the final data object
         const purchaseData = {
             use_email: email,
             user_password: password,
-            unit_price: unit_price,
+            unit_price: unit_price, 
             seat_class: seat_class,
             depart_date: date,
             passenger_names: passenger_names,

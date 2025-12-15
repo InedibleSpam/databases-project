@@ -1,0 +1,158 @@
+body {
+    font-family: "Arial", sans-serif;
+    background-color: #faf3dd;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #207cd8;
+    margin-bottom: 25px;
+}
+
+#flightDetails {
+    background-color: #e3f3ff;
+    border: 1px solid #207cd8;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    font-size: 1.1em;
+}
+
+#flightDetails p {
+    margin: 8px 0;
+}
+
+#flightDetails strong {
+    color: #207cd8;
+}
+
+#purchaseForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #faf3dd;
+}
+
+.form-section h2,
+.form-section h3 {
+    color: #207cd8;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type = "email"],
+input[type = "password"],
+input[type = "text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+#passengerInputsContainer h2 {
+    margin-top: 0;
+}
+
+.passenger-input-container {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+}
+
+.passenger-row {
+    display: flex;
+    gap: 20px;
+}
+
+.passenger-row h3 {
+    width: 150px;
+    flex-shrink: 0;
+    color: #f55d3e;
+    margin-top: 0;
+    font-size: 1.1em;
+    border-bottom: none;
+}
+
+.passenger-row .form-group {
+    flex-grow: 1;
+}
+
+p a {
+    color: #207cd8;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+.submit-btn {
+    background-color: #207cd8;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+.submit-btn:hover {
+    background-color: #1a64b8;
+}
+
+#purchaseMessage {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+#purchaseMessage[style*="green"] {
+    color: #207cd8 !important;
+    background-color: #e3f3ff;
+}
+
+#purchaseMessage[style*="red"] {
+    color: white !important;
+    background-color: #f55d3e;
+}

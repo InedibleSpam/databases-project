@@ -1,19 +1,19 @@
 const db = require("./db");
 
-//Returns number 
+// Returns number 
 function setPriceGreaterThan(price_greater_than){
     return price_greater_than;
 }
-//Returns number 
+// Returns number 
 function setPriceLessThan(price_less_than){
     return price_less_than;
 }
-//Returns string 
+// Returns string 
 function setSeatClass(seat_class){
     return seat_class;
-}   
+} 
 
-// User Authentication 
+// User Registration 
 async function register_user(fname, lname, email, password, birthdate) {
     await db.query(
         "INSERT INTO user (fname, lname, user_email, user_password, birthday) VALUES (?, ?, ?, ?, ?)",
@@ -35,6 +35,18 @@ async function get_airports() {
     const [rows] = await db.query("SELECT * FROM airport");
     return rows;
 }
+
+// Retrieve count of tickets 
+async function get_tickets_sold(log_id, seat_class) {
+    const [rows] = await db.query(
+        `SELECT COUNT(tick_id) as sold_count 
+         FROM ticket 
+         WHERE log_id = ? AND class = ?`,
+        [log_id, seat_class]
+    );
+    return rows[0] ? rows[0].sold_count : 0;
+}
+
 
 // Flight Search Functions 
 async function find_flights(depart_port, arrive_port, flightDate) {
@@ -123,7 +135,7 @@ async function calculate_price(plane_id, seat_class, num_tickets) {
     return { total_price: basePrice * num_tickets };
 }
 
-// Purchase Tickets
+// Purchase Tickets 
 async function buy_tick(
     email,
     password,
@@ -152,7 +164,7 @@ async function buy_tick(
             `INSERT INTO ticket 
              (price, class, Airport, log_id) 
              VALUES (?, ?, ?, ?)`,
-            [base_price, seat_class, Airport_id, log_id]
+            [base_price, seat_class, Airport_id, log_id] 
         );
         const tick_id = ticketResult.insertId;
         await db.query(
@@ -236,5 +248,6 @@ module.exports = {
     calculate_price,
     buy_tick,
     GeneralSortFunction,
-    get_user_tickets
+    get_user_tickets,
+    get_tickets_sold 
 };
