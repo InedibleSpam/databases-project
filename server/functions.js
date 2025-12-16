@@ -54,7 +54,7 @@ async function find_flights(depart_port, arrive_port, flightDate) {
         `SELECT 
             l.log_id, 
             l.plane_id,
-            l.Depature_time, 
+            l.Departure_time, 
             l.Arrival_time,
             p.First_class_seat,
             p.Buisness_class_seat,
@@ -65,14 +65,14 @@ async function find_flights(depart_port, arrive_port, flightDate) {
             l.out_airport = ? 
             AND l.in_airport = ? 
             AND l.Date = ?
-        ORDER BY l.Depature_time ASC`,
+        ORDER BY l.Departure_time ASC`,
         [depart_port, arrive_port, flightDate]
     );
     return rows;
 }
 
 // Sorting and Filtering Function 
-async function GeneralSortFunction(depart_port, arrive_port, flightDate, filters = {}, sortBy = 'Depature_time', sortOrder = 'ASC') {
+async function GeneralSortFunction(depart_port, arrive_port, flightDate, filters = {}, sortBy = 'Departure_time', sortOrder = 'ASC') {
     
     let sql = `
         SELECT DISTINCT
@@ -80,7 +80,7 @@ async function GeneralSortFunction(depart_port, arrive_port, flightDate, filters
             t.class, 
             l.log_id,
             l.plane_id,
-            l.Depature_time, 
+            l.Departure_time, 
             l.Arrival_time,
             l.out_airport,
             l.in_airport,
@@ -108,11 +108,11 @@ async function GeneralSortFunction(depart_port, arrive_port, flightDate, filters
         sql_values.push(filters.seat_class);
     }
     
-    let sortField = 'l.Depature_time'; 
+    let sortField = 'l.Departure_time'; 
     if (sortBy === 'price') {
         sortField = 't.price';
-    } else if (sortBy === 'Depature_time') {
-        sortField = 'l.Depature_time';
+    } else if (sortBy === 'Departure_time') {
+        sortField = 'l.Departure_time';
     } else if (sortBy === 'Arrival_time') {
         sortField = 'l.Arrival_time';
     }
@@ -150,21 +150,13 @@ async function buy_tick(
     const user = await authenticate_user(email, password);
     if (!user) throw new Error("Invalid email/password");
     
-    const [logDetails] = await db.query(
-        "SELECT out_airport FROM logs WHERE Log_id = ?", 
-        [log_id]
-    );
-    if (logDetails.length === 0) throw new Error("Flight details not found.");
-    
-    const { out_airport: Airport_id } = logDetails[0]; 
-
     const num_ticks = passenger_names.length;
     for (const passenger of passenger_names) {
-                const [ticketResult] = await db.query(
+        const [ticketResult] = await db.query(
             `INSERT INTO ticket 
-             (price, class, Airport, log_id) 
-             VALUES (?, ?, ?, ?)`,
-            [base_price, seat_class, Airport_id, log_id] 
+             (price, class, log_id) 
+             VALUES (?, ?, ?)`,
+            [base_price, seat_class, log_id]
         );
         const tick_id = ticketResult.insertId;
         await db.query(
@@ -197,7 +189,7 @@ async function get_user_tickets(user_id) {
             t.class AS seat_class,
             t.tick_id,
             l.Date,
-            l.Depature_time,
+            l.Departure_time,
             l.Arrival_time,
             A_out.City AS depart_city,
             A_out.State AS depart_state,
@@ -209,18 +201,18 @@ async function get_user_tickets(user_id) {
         JOIN airport A_out ON l.out_airport = A_out.Air_id
         JOIN airport A_in ON l.in_airport = A_in.Air_id
         WHERE p.user_id = ?
-        ORDER BY l.Date DESC, l.Depature_time DESC`,
+        ORDER BY l.Date DESC, l.Departure_time DESC`,
         [user_id]
     );
     
     // Group tickets by flight 
     const tickets = {};
     rows.forEach(row => {
-        const flightKey = `${row.Date}-${row.Depature_time}-${row.arrive_city}`;
+        const flightKey = `${row.Date}-${row.Departure_time}-${row.arrive_city}`;
         if (!tickets[flightKey]) {
             tickets[flightKey] = {
                 date: row.Date,
-                departure_time: row.Depature_time,
+                departure_time: row.Departure_time,
                 arrival_time: row.Arrival_time,
                 depart_location: `${row.depart_city}, ${row.depart_state}`,
                 arrive_location: `${row.arrive_city}, ${row.arrive_state}`,

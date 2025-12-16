@@ -6,7 +6,7 @@ const numTicketsInput = document.getElementById("numTickets");
 const resultDiv = document.getElementById("result");
 const searchBtn = document.getElementById("searchBtn");
 
-let currentSortBy = "Depature_time";
+let currentSortBy = "Departure_time";
 let currentSortOrder = "ASC";
 
 // Load airports from backend 
@@ -39,12 +39,12 @@ async function loadAirports() {
 // Render flight cards (WITH CLIENT-SIDE SEAT ADJUSTMENT)
 function renderFlightCards(flights, seat_class, num_tickets) {
     let html = `<h2>Available ${seat_class} Flights (${num_tickets} Tickets)</h2>`;
-    const requestedTickets = parseInt(num_tickets); 
+    const requestedTickets = parseInt(num_tickets, 10) || 1;
 
     html += `
         <div id="sortControls" style="text-align: center; margin-bottom: 20px;">
             <p style="font-weight: bold; margin-bottom: 5px; color: #555;">Sort Results By:</p>
-            <button onclick="executeFlightSearch('Depature_time', 'ASC')" class="sort-btn">Departure Time</button>
+            <button onclick="executeFlightSearch('Departure_time', 'ASC')" class="sort-btn">Departure Time</button>
             <button onclick="executeFlightSearch('price', 'ASC')" class="sort-btn">Price Low to High</button>
             <button onclick="executeFlightSearch('price', 'DESC')" class="sort-btn">Price High to Low</button>
         </div>
@@ -52,27 +52,32 @@ function renderFlightCards(flights, seat_class, num_tickets) {
 
     flights.forEach((flight) => {
         
-        const remainingSeats = parseInt(flight.remaining_seats);
-        const adjustedSeats = remainingSeats - requestedTickets; 
-        
+        const remainingSeats = parseInt(flight.remaining_seats, 10) || 0;
+        const requested = requestedTickets;
+
         let seatsText;
-        let seatColor;
-        let isSoldOut = false;
-        
-        if (adjustedSeats <= 0) {
+        let seatColor = 'green';
+        let buttonDisabled = '';
+        let buttonText = 'Buy Ticket';
+
+        if (remainingSeats <= 0) {
             seatsText = 'SOLD OUT';
             seatColor = 'red';
-            isSoldOut = true;
-        } else if (adjustedSeats <= 5) {
-            seatsText = adjustedSeats;
-            seatColor = 'orange'; // Low seat warning
+            buttonDisabled = 'disabled';
+            buttonText = 'Sold Out';
+        } else if (requested > remainingSeats) {
+            // Not enough seats for the requested number
+            seatsText = `Only ${remainingSeats} left`;
+            seatColor = 'orange';
+            buttonDisabled = 'disabled';
+            buttonText = 'Not enough seats';
         } else {
-            seatsText = adjustedSeats;
-            seatColor = 'green';
+            const adjustedSeats = remainingSeats - requested;
+            seatsText = adjustedSeats <= 5 ? adjustedSeats : adjustedSeats;
+            seatColor = adjustedSeats <= 5 ? 'orange' : 'green';
+            buttonDisabled = '';
+            buttonText = 'Buy Ticket';
         }
-        
-        const buttonDisabled = isSoldOut ? 'disabled' : '';
-        const buttonText = isSoldOut ? 'Sold Out' : 'Buy Ticket';
         // ---------------------------------------------
         
         const priceValue = parseFloat(flight.price).toFixed(2);
@@ -212,7 +217,7 @@ function bookFlight(
 
 // Event Listeners
 searchBtn.addEventListener("click", () =>
-    executeFlightSearch("Depature_time", "ASC")
+    executeFlightSearch("Departure_time", "ASC")
 );
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
@@ -222,3 +227,21 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 });
 
 window.addEventListener("load", loadAirports);
+
+// Enforce frontend cap on numTickets input and clamp value to `max`
+if (numTicketsInput) {
+    numTicketsInput.addEventListener('input', () => {
+        const min = Number(numTicketsInput.min) || 1;
+        const max = Number(numTicketsInput.max) || 9;
+        let val = parseInt(numTicketsInput.value, 10) || min;
+        if (val < min) val = min;
+        if (val > max) {
+            val = max;
+            numTicketsInput.value = val;
+            // optional: brief user feedback
+            alert(`Maximum ${max} tickets allowed`);
+        } else {
+            numTicketsInput.value = val;
+        }
+    });
+}

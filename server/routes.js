@@ -42,8 +42,8 @@ router.get("/tickets", (req, res) =>
 // User Registration Route
 router.post("/api/register", async (req, res) => {
     try {
-        const { fname, lname, email, password, birthdate } = req.body;
-        await funcs.register_user(fname, lname, email, password, birthdate);
+        const { fname, lname, user_email, user_password, birthdate } = req.body;
+        await funcs.register_user(fname, lname, user_email, user_password, birthdate);
         res.status(201).json({ message: "User registered successfully." });
     } catch (err) {
         res.status(500).json({ message: "Registration failed.", error: err.message });
@@ -100,7 +100,7 @@ router.get("/api/search_flights_sorted", async (req, res) => {
             date: depart_date,
             seat_class,
             num_tickets,
-            sort_by = "Depature_time",
+            sort_by = "Departure_time",
             sort_order = "ASC",
         } = req.query;
 
@@ -141,7 +141,7 @@ router.get("/api/search_flights_sorted", async (req, res) => {
 
             return {
                 log_id: flight.log_id,
-                departure_time: flight.Depature_time,
+                departure_time: flight.Departure_time,
                 arrival_time: flight.Arrival_time,
                 price: total_price,
                 remaining_seats: remaining_seats,
